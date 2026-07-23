@@ -1,0 +1,59 @@
+{
+  "name": "@csvdatabase/api-typescript",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for the CSDB JSON server",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csvdatabase/api-typescript.git"
+  },
+  "bugs": {
+    "url": "https://github.com/csvdatabase/api-typescript/issues"
+  },
+  "homepage": "https://docs.csvdatabase.net/",
+  "scripts": {
+    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
+    "build": "npm run clean && tsc -p tsconfig.json",
+    "check": "npm run typecheck && npm test && npm run build",
+    "prepack": "npm run check",
+    "test": "node --import tsx --test test/*.test.ts",
+    "test:live": "node --import tsx --test test/live.test.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit"
+  },
+  "engines": {
+    "node": ">=20.12"
+  },
+  "keywords": [
+    "csdb",
+    "sdk",
+    "api",
+    "typescript",
+    "database"
+  ],
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}
