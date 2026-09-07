@@ -25,12 +25,22 @@ jobs:
       - name: Install an OIDC-capable npm CLI
         run: npm install --global npm@latest
       - name: Verify release tag
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          TARGET_COMMITISH: ${{ github.event.release.target_commitish }}
         run: |
           node --input-type=module --eval '
             import packageJson from "./package.json" with { type: "json" };
+            const tag = process.env.RELEASE_TAG ?? "";
+            const target = process.env.TARGET_COMMITISH ?? "";
+            const match = tag.match(/^v([0-9]+)\.([0-9]+)\.([0-9]+)$/);
+            if (!match) throw new Error(`Release tag must look like v1.1.1, received ${tag}`);
             const expected = `v${packageJson.version}`;
-            if (process.env.GITHUB_REF_NAME !== expected) {
-              throw new Error(`Expected tag ${expected}, received ${process.env.GITHUB_REF_NAME}`);
+            if (tag !== expected) {
+              throw new Error(`Expected tag ${expected}, received ${tag}`);
+            }
+            if (match[2] === "0" && match[3] === "0" && target !== `v${match[1]}`) {
+              throw new Error(`Major release ${tag} must target branch v${match[1]}, received ${target}`);
             }
           '
       - run: npm ci
