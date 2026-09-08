@@ -2,9 +2,7 @@
 
 ## Goal
 
-Provide an idiomatic TypeScript client that mirrors the remotely meaningful
-`@csvdatabase/csdb` API one-for-one, converts calls into the documented JSON
-command envelope, and sends them to the CSDB TypeScript server.
+Provide an idiomatic TypeScript client that mirrors the remotely meaningful `@csvdatabase/csdb` API one-for-one, converts calls into the documented JSON command envelope, and sends them to the CSDB TypeScript server.
 
 ## Mapping
 
@@ -35,17 +33,13 @@ command envelope, and sends them to the CSDB TypeScript server.
 
 ## Compatibility Boundary
 
-Network terminal operations necessarily return `Promise` values. Local document
-internals, arbitrary CSDB text parsing, executor access, and path-based file writes
-cannot cross the existing server contract and are not emulated.
+Network terminal operations necessarily return `Promise` values. Local document internals, arbitrary CSDB text parsing, executor access, and path-based file writes cannot cross the existing server contract and are not emulated.
 
 ## Acceptance Criteria
 
-- Every remotely meaningful database and table method retains its original name
-  and argument shape.
+- Every remotely meaningful database and table method retains its original name and argument shape.
 - Fluent calls produce the exact documented server JSON.
-- SQL, query plans, table mutations, DDL, validation, serialization, and primary
-  keys decode their expected result shape.
+- SQL, query plans, table mutations, DDL, validation, serialization, and primary keys decode their expected result shape.
 - Bigints are losslessly converted before JSON serialization.
 - Server errors map into stable SDK error classes with request IDs.
 - Timeouts, aborts, custom transports, API keys, and path-prefixed base URLs work.
